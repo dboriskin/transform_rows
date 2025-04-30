@@ -1,6 +1,6 @@
 import json
 
-MAX_STR_LENGTH = 690
+MAX_STR_LENGTH = 2000
 
 def transform_rows(rows):
     """
