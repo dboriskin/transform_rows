@@ -1,5 +1,7 @@
 import json
 
+MAX_STR_LENGTH = 690
+
 def transform_rows(rows):
     """
     Преобразует список строк (кортежей или словарей) в список словарей с развернутыми полями OLD_VALUE и NEW_VALUE.
@@ -8,7 +10,7 @@ def transform_rows(rows):
     - OLD_VALUE (индекс 5) и NEW_VALUE (индекс 6) должны быть строками в формате JSON.
     - Если парсинг JSON в OLD_VALUE или NEW_VALUE невозможен, в соответствующем NEW_VALUE будет записано "Error - Bad JSON".
     - Если в OLD_VALUE не строка, а что-то другое — оставляем значение как есть.
-    - Обрезаем строки JSON в OLD_VALUE и NEW_VALUE до 690 символов, если они длиннее.
+    - Обрезаем строки JSON в OLD_VALUE и NEW_VALUE до MAX_STR_LENGTH символов, если они длиннее.
     
     Аргументы:
         rows: список кортежей или список словарей
@@ -57,10 +59,10 @@ def transform_rows(rows):
             new_value = new_json.get(key)
 
             # Обрезка больших JSON строк
-            if isinstance(old_value, str) and len(old_value) > 690:
-                old_value = old_value[:690]
-            if isinstance(new_value, str) and len(new_value) > 690:
-                new_value = new_value[:690]
+            if isinstance(old_value, str) and len(old_value) > MAX_STR_LENGTH:
+                old_value = old_value[:MAX_STR_LENGTH]
+            if isinstance(new_value, str) and len(new_value) > MAX_STR_LENGTH:
+                new_value = new_value[:MAX_STR_LENGTH]
 
             results.append({
                 **common_fields,
